@@ -70,7 +70,7 @@ router.get('/user',
 )
 
 /* Profile */
-router.put('/profile/update',
+router.put('/profile',
     authenticate,
     body('name').notEmpty().withMessage('El nombre es obligatorio'),
     body('email').isEmail().toLowerCase().withMessage('Email invalido'),
@@ -78,7 +78,7 @@ router.put('/profile/update',
     AuthController.updateProfile
 )
 
-router.post('/profile/update-password',
+router.post('/update-password',
     authenticate,
     body('current_password').isLength({ min: 8 }).withMessage('La contraseña actual no puede ir vacio'),
     body('password').isLength({ min: 8 }).withMessage('Mínimo 8 caracteres'),
@@ -92,7 +92,7 @@ router.post('/profile/update-password',
     AuthController.updateCurrentUserPassword
 )
 
-router.post('/profile/check-password',
+router.post('/check-password',
     authenticate,
     body('password').notEmpty().withMessage('La contraseña no puede ir vacia'),
     handleInputErrors,

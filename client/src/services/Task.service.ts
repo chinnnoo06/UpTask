@@ -12,7 +12,7 @@ type TTaskAPI = {
 
 export const createTask = async ({ formData, projectId } : Pick<TTaskAPI, 'formData' | 'projectId'>) => {
     try {
-        await api.post(`/projects/${projectId}/tasks/add`, formData)
+        await api.post(`/projects/${projectId}/tasks`, formData)
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
@@ -22,7 +22,7 @@ export const createTask = async ({ formData, projectId } : Pick<TTaskAPI, 'formD
 
 export const getTaskById = async ({projectId, taskId} : Pick<TTaskAPI, 'projectId' | 'taskId'>) => {
     try {
-        const { data } = await api(`/projects/${projectId}/tasks/get/${taskId}`)
+        const { data } = await api(`/projects/${projectId}/tasks/${taskId}`)
 
         const response = TaskSchema.safeParse(data.task)
 
@@ -41,7 +41,7 @@ export const getTaskById = async ({projectId, taskId} : Pick<TTaskAPI, 'projectI
 
 export const updateTask = async ({projectId, taskId, formData} : Pick<TTaskAPI, 'projectId' | 'taskId' | 'formData'>) => {
     try {
-        await api.put(`/projects/${projectId}/tasks/update/${taskId}`, formData)
+        await api.put(`/projects/${projectId}/tasks/${taskId}`, formData)
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
@@ -51,7 +51,7 @@ export const updateTask = async ({projectId, taskId, formData} : Pick<TTaskAPI, 
 
 export const deleteTask = async ({projectId, taskId} : Pick<TTaskAPI, 'projectId' | 'taskId'>) => {
     try {
-        await api.delete(`/projects/${projectId}/tasks/delete/${taskId}`)
+        await api.delete(`/projects/${projectId}/tasks/${taskId}`)
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
@@ -61,7 +61,7 @@ export const deleteTask = async ({projectId, taskId} : Pick<TTaskAPI, 'projectId
 
 export const updateTaskStatus = async ({projectId, taskId, status} : Pick<TTaskAPI, 'projectId' | 'taskId' | 'status'>) => {
     try {
-        await api.post(`/projects/${projectId}/tasks/status/${taskId}`, {status})
+        await api.post(`/projects/${projectId}/tasks/${taskId}/status`, {status})
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)

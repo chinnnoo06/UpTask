@@ -103,7 +103,7 @@ export const getUser = async () => {
 
 export const checkPassword = async (formData: TCheckPasswordForm) => {
     try {
-        const { data } = await api.post('/auth/profile/check-password', formData)
+        const { data } = await api.post('/auth/check-password', formData)
         
         return data.message
     } catch (error) {

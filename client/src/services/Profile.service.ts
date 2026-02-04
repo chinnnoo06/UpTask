@@ -4,7 +4,7 @@ import type { TUpdateCurrentPasswordForm, TUserProfileForm } from "../types";
 
 export const updateProfile = async (formData: TUserProfileForm) => {
     try {
-        const { data } = await api.put('/auth/profile/update', formData)
+        const { data } = await api.put('/auth/profile', formData)
         return data.message
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -15,7 +15,7 @@ export const updateProfile = async (formData: TUserProfileForm) => {
 
 export const updateCurrentPassword = async (formData: TUpdateCurrentPasswordForm) => {
     try {
-        const { data } = await api.post('/auth/profile/update-password', formData)
+        const { data } = await api.post('/auth/update-password', formData)
         return data.message
     } catch (error) {
         if (isAxiosError(error) && error.response) {

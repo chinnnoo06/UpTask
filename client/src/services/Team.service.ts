@@ -16,7 +16,7 @@ export const findUserByEmail = async ({ projectId, formData }: { projectId: TPro
 
 export const addMemberById = async ({ projectId, id }: { projectId: TProject['_id'], id: TTeamMember['_id'] }) => {
     try {
-        const { data } = await api.post(`/projects/${projectId}/team/add`, { id })
+        const { data } = await api.post(`/projects/${projectId}/team`, { id })
         return data.message
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -27,7 +27,7 @@ export const addMemberById = async ({ projectId, id }: { projectId: TProject['_i
 
 export const getProjectTeam = async (projectId: TProject['_id']) => {
     try {
-        const { data } = await api.get(`/projects/${projectId}/team/get`)
+        const { data } = await api.get(`/projects/${projectId}/team`)
 
         const response = TeamMembersSchema.safeParse(data.project)
 
@@ -45,7 +45,7 @@ export const getProjectTeam = async (projectId: TProject['_id']) => {
 
 export const removeMemberById = async ({ projectId, id }: { projectId: TProject['_id'], id: TTeamMember['_id'] }) => {
     try {
-        const { data } = await api.delete(`/projects/${projectId}/team/remove/${id}`)
+        const { data } = await api.delete(`/projects/${projectId}/team/${id}`)
         return data.message
     } catch (error) {
         if (isAxiosError(error) && error.response) {

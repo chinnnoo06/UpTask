@@ -5,7 +5,7 @@ import { DashborardProjectSchema, EditProjectSchema, ProjectSchema } from "../sc
 
 export const createProject = async (formData: TProjectForm) => {
     try {
-        await api.post('/projects/create', formData)
+        await api.post('/projects', formData)
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
@@ -15,7 +15,7 @@ export const createProject = async (formData: TProjectForm) => {
 
 export const getProjects = async () => {
     try {
-        const { data } = await api('/projects/get')
+        const { data } = await api('/projects')
 
         const response = DashborardProjectSchema.safeParse(data.projects)
 
@@ -34,7 +34,7 @@ export const getProjects = async () => {
 
 export const getProjectById = async (projectId: TProject['_id']) => {
     try {
-        const { data } = await api(`/projects/get/${projectId}`)
+        const { data } = await api(`/projects/${projectId}`)
 
         const response = EditProjectSchema.safeParse(data.project)
 
@@ -53,7 +53,7 @@ export const getProjectById = async (projectId: TProject['_id']) => {
 
 export const getFullProjectById = async (projectId: TProject['_id']) => {
     try {
-        const { data } = await api(`/projects/get/${projectId}`)
+        const { data } = await api(`/projects/${projectId}`)
 
         const response = ProjectSchema.safeParse(data.project)
 
@@ -77,7 +77,7 @@ type TProjectAPI = {
 
 export const updateProject = async ({ formData, projectId }: TProjectAPI) => {
     try {
-        await api.put(`/projects/update/${projectId}`, formData)
+        await api.put(`/projects/${projectId}`, formData)
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
@@ -87,7 +87,7 @@ export const updateProject = async ({ formData, projectId }: TProjectAPI) => {
 
 export const deleteProject = async (projectId: TProject['_id']) => {
     try {
-        await api.delete(`/projects/delete/${projectId}`)
+        await api.delete(`/projects/${projectId}`)
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)

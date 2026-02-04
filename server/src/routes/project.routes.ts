@@ -13,15 +13,15 @@ const router = express.Router();
 
 router.use(authenticate)
 
-router.get("/get", ProjectController.getAllProjects);
+router.get("/", ProjectController.getAllProjects);
 
-router.get("/get/:id",
+router.get("/:id",
     param('id').isMongoId().withMessage('Id no valido'),
     handleInputErrors,
     ProjectController.getProjectById
 );
 
-router.post("/create",
+router.post("/",
     body('projectName').notEmpty().withMessage('El nombre del proyecto es obligatorio'),
     body('clientName').notEmpty().withMessage('El nombre del cliente es obligatorio'),
     body('description').notEmpty().withMessage('La descripción del proyecto es obligatoria'),
@@ -29,10 +29,9 @@ router.post("/create",
     ProjectController.createProject
 );
 
-
 router.param('projectId', projectExist)
 
-router.put("/update/:projectId",
+router.put("/:projectId",
     hasAuthorization,
     param('projectId').isMongoId().withMessage('Id no valido'),
     body('projectName').notEmpty().withMessage('El nombre del proyecto es obligatorio'),
@@ -42,7 +41,7 @@ router.put("/update/:projectId",
     ProjectController.updateProject
 );
 
-router.delete("/delete/:projectId",
+router.delete("/:projectId",
     hasAuthorization,
     param('projectId').isMongoId().withMessage('Id no valido'),
     handleInputErrors,
@@ -54,7 +53,7 @@ router.delete("/delete/:projectId",
 router.param('taskId', taskExist)
 router.param('taskId', taskBelongToProject)
 
-router.post('/:projectId/tasks/add',
+router.post('/:projectId/tasks',
     hasAuthorization,
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     body('name').notEmpty().withMessage('El nombre de la tarea es obligatorio'),
@@ -63,19 +62,19 @@ router.post('/:projectId/tasks/add',
     TaskController.createTask
 )
 
-router.get('/:projectId/tasks/get',
+router.get('/:projectId/tasks',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     TaskController.getTasks
 )
 
-router.get('/:projectId/tasks/get/:taskId',
+router.get('/:projectId/tasks/:taskId',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     param('taskId').isMongoId().withMessage('Id de la tarea no valido'),
     handleInputErrors,
     TaskController.getTaskById
 )
 
-router.put('/:projectId/tasks/update/:taskId',
+router.put('/:projectId/tasks/:taskId',
     hasAuthorization,
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     param('taskId').isMongoId().withMessage('Id de la tarea no valido'),
@@ -85,7 +84,7 @@ router.put('/:projectId/tasks/update/:taskId',
     TaskController.updateTask
 )
 
-router.delete('/:projectId/tasks/delete/:taskId',
+router.delete('/:projectId/tasks/:taskId',
     hasAuthorization,
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     param('taskId').isMongoId().withMessage('Id de la tarea no valido'),
@@ -94,7 +93,7 @@ router.delete('/:projectId/tasks/delete/:taskId',
 )
 
 
-router.post('/:projectId/tasks/status/:taskId',
+router.post('/:projectId/tasks/:taskId/status',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     param('taskId').isMongoId().withMessage('Id de la tarea no valido'),
     body('status').notEmpty().withMessage('El estado es obligatorio'),
@@ -103,7 +102,7 @@ router.post('/:projectId/tasks/status/:taskId',
 )
 
 /* Routes for teams */
-router.get('/:projectId/team/get',
+router.get('/:projectId/team',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     TeamController.getMembers
 )
@@ -115,14 +114,14 @@ router.post('/:projectId/team/find',
     TeamController.findMemberByEmail
 )
 
-router.post('/:projectId/team/add',
+router.post('/:projectId/team',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     body('id').isMongoId().withMessage('Id no valido'),
     handleInputErrors,
     TeamController.addMemberById
 )
 
-router.delete('/:projectId/team/remove/:id',
+router.delete('/:projectId/team/:id',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     param('id').isMongoId().withMessage('Id no valido'),
     handleInputErrors,
@@ -130,7 +129,7 @@ router.delete('/:projectId/team/remove/:id',
 )
 
 /*Routes for notes*/
-router.post('/:projectId/tasks/:taskId/notes/add',
+router.post('/:projectId/tasks/:taskId/notes',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     param('taskId').isMongoId().withMessage('Id de la tarea no valido'),
     body('content').notEmpty().withMessage('Contenido obligatorio'),
@@ -138,13 +137,13 @@ router.post('/:projectId/tasks/:taskId/notes/add',
     NoteController.createNote
 )
 
-router.get('/:projectId/tasks/:taskId/notes/get',
+router.get('/:projectId/tasks/:taskId/notes',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     param('taskId').isMongoId().withMessage('Id de la tarea no valido'),
     NoteController.getTaskNotes
 )
 
-router.delete('/:projectId/tasks/:taskId/notes/delete/:noteId',
+router.delete('/:projectId/tasks/:taskId/notes/:noteId',
     param('projectId').isMongoId().withMessage('Id del proyecto no valido'),
     param('taskId').isMongoId().withMessage('Id de la tarea no valido'),
     param('noteId').isMongoId().withMessage('Id de la nota no valido'),

@@ -11,7 +11,7 @@ type TNoteAPI = {
 
 export const createNote = async ({ formData, projectId, taskId }: Pick<TNoteAPI, 'formData' | 'projectId' | 'taskId'>) => {
     try {
-        const { data } = await api.post(`/projects/${projectId}/tasks/${taskId}/notes/add`, formData)
+        const { data } = await api.post(`/projects/${projectId}/tasks/${taskId}/notes`, formData)
         return data.message
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -22,7 +22,7 @@ export const createNote = async ({ formData, projectId, taskId }: Pick<TNoteAPI,
 
 export const deleteNote = async ({ projectId, taskId, noteId}: Pick<TNoteAPI, 'projectId' | 'taskId' | 'noteId'>) => {
     try {
-        const { data } = await api.delete(`/projects/${projectId}/tasks/${taskId}/notes/delete/${noteId}`)
+        const { data } = await api.delete(`/projects/${projectId}/tasks/${taskId}/notes/${noteId}`)
         return data.message
     } catch (error) {
         if (isAxiosError(error) && error.response) {
