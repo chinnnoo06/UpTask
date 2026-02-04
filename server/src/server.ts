@@ -1,6 +1,6 @@
 import express from 'express'
 import morgan from 'morgan'
-import dotenv from 'dotenv'
+import 'dotenv/config'
 import cors from 'cors'
 import { connectDB } from './config/db'
 
@@ -8,7 +8,6 @@ import projectRoutes from './routes/project.routes'
 import authRoutes from './routes/auth.routes'
 import { corsOptions } from './config/cors'
 
-dotenv.config()
 connectDB()
 
 const server = express()

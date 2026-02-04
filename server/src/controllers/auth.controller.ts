@@ -106,7 +106,7 @@ export class AuthController {
 
             if (!isPasswordCorrect) {
                 const error = new Error('Contraseña incorrecta')
-                return res.status(404).json({ error: error.message })
+                return res.status(401).json({ error: error.message })
             }
 
             const token = generateJWT({ id: user._id })
