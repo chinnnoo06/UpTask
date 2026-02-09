@@ -5,7 +5,7 @@ import Task from "../models/Task"
 declare global {
     namespace Express {
         interface Request {
-            task: TTask
+            task?: TTask
         }
     }
 }

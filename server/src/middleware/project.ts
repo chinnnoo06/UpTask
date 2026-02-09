@@ -5,7 +5,7 @@ import { TProject } from "../types/project.types"
 declare global {
     namespace Express {
         interface Request {
-            project: TProject
+            project?: TProject
         }
     }
 }
